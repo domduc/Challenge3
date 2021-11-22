@@ -1,0 +1,43 @@
+{
+  "username": "user@aspireapp.com",
+  "password": "@sp1r3app",
+  "comsumeproduct": {
+    "productname": "ComsumeProduct",
+    "producttype": "Storable Product",
+    "productcategory": "All",
+    "internalreference": "Ref",
+    "salesprice": "10",
+    "cost": "0,1",
+    "uom": "Units",
+    "purchaseuom": "Units",
+    "quantity": [
+      {
+        "location": "WH/Stock",
+        "package": "1",
+        "onhandquantity": "200000"
+      }
+    ]
+  },
+  "produceproduct": {
+    "productname": "ProduceProduct",
+    "producttype": "Storable Product",
+    "productcategory": "All",
+    "internalreference": "Ref",
+    "salesprice": "135",
+    "cost": "0,1",
+    "uom": "Units",
+    "purchaseuom": "Units"
+  },
+  "manufacturingorders": {
+    "produceproduct": "ProduceProduct",
+    "producequantity": "20000",
+    "produceuom": "Units",
+    "components": [
+      {
+        "comsumeproduct": "ComsumeProduct",
+        "comsumequantity": "20000",
+        "comsumeuom": "Units"
+      }
+    ]
+  }
+}
