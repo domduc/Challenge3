@@ -68,6 +68,8 @@ public class PageInventory {
         By btn_Create = By.xpath("//button[contains(text(), 'Create')]");
         By btn_Filter = By.xpath("//button[child::span[text()='Filters']]");
         By btn_Group_By = By.xpath("//button[child::span[text()='Group By']]");
+        By tfd_Search_Product = By.xpath("//div[@class = 'o_searchview_input_container']//input");
+        String lbl_Product_Name_Kanban = "//strong[@class='o_kanban_record_title']/span[contains(text(),'%s')]";
 
         // Product creation form
         By btn_Save = By.xpath("//button[contains(text(),'Save')]");
@@ -84,6 +86,8 @@ public class PageInventory {
         By tfd_Sales_Price = By.xpath("//div[@name = 'list_price']//input");
         By tfd_Cost = By.xpath("//div[@name = 'standard_price']/input");
         By btn_Update_Quantity = By.xpath("//button[child::span[text()='Update Quantity']]");
+        By lbl_On_Hand_Quantity = By.xpath("//div[@name = 'qty_available']//span[@class='o_stat_value']");
+        By lbl_Forecasted_Quantity = By.xpath("//div[@name = 'virtual_available']//span[@class='o_stat_value']");
 
         //Update quantity page
         By lbl_Update_Quantity_Title = By.xpath("//li[@class = 'breadcrumb-item active' and text()='Update Quantity']");
@@ -134,6 +138,7 @@ public class PageInventory {
             // Unit of measure
             // Purchase unit of measure
             // Internal note
+
 
             //Inventory tab
             // Operation
@@ -210,7 +215,7 @@ public class PageInventory {
 
         }
 
-        public String getRefProductName(String _strProductName){
+        public String getRefProductName(String _strProductName) {
             String xpath = "//li[@class = 'breadcrumb-item active' and contains(text(),'%s')]";
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(String.format(xpath, _strProductName))));
             String _prodName = driver.findElement(lbl_Product_Name).getText();
@@ -287,5 +292,42 @@ public class PageInventory {
             driver.findElement(btn_Save).click();
         }
 
+        /**
+         * Searching by Product Name
+         *
+         * @param strProdName
+         * @param strSearchBy
+         */
+        public void searchProduct(String strProdName, String strSearchBy) throws Exception {
+            try {
+                String _strSearchBy = String.format("//li[descendant::em[text()='%s']]", strSearchBy);
+                wait.until(ExpectedConditions.presenceOfElementLocated(tfd_Search_Product)).click();
+                Thread.sleep(500);
+                driver.findElement(tfd_Search_Product).sendKeys(strProdName);
+                Thread.sleep(1000);
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(_strSearchBy))).click();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        /**
+         * Click the product on kanban board
+         *
+         * @param strProdName
+         */
+        public void openProduct(String strProdName) {
+            By _xpath = By.xpath(String.format(lbl_Product_Name_Kanban, strProdName));
+            wait.until(ExpectedConditions.presenceOfElementLocated(_xpath)).click();
+        }
+
+        /**
+         * get the on hand of a product
+         *
+         * @return
+         */
+        public String getOnHandAmount() {
+            return wait.until(ExpectedConditions.presenceOfElementLocated(lbl_On_Hand_Quantity)).getText();
+        }
     }
 }
