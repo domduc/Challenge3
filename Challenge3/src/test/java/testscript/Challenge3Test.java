@@ -73,11 +73,32 @@ public class Challenge3Test extends TestScript{
         _pMO.createManufacturingOrder(strComsumeProductName, strProduceProductName,20000,20000,"Units");
         
         log.info("Open the Products page");
+        pHome.goToHome();
+        pHome.navigateHome2Item(PageHome.HomeMenuItem.Inventory);
         _pInventory.selectMenuHeaderItem("Products", "Products");
 
+
+        log.info("Search Consume Products" + strComsumeProductName);
+        _pProduct.searchProduct(strComsumeProductName, "Product");
+        _pProduct.openProduct(strComsumeProductName);
+
         log.info("Verify the Consume is - 20000 Units");
+        String _on_hand = _pProduct.getOnHandAmount();
+        AssertJUnit.assertEquals(_on_hand, "0.00");
+
+        log.info("Open the Products page");
+        pHome.goToHome();
+        pHome.navigateHome2Item(PageHome.HomeMenuItem.Inventory);
+        _pInventory.selectMenuHeaderItem("Products", "Products");
+
+        log.info("Search Consume Products" + strComsumeProductName);
+        _pProduct.searchProduct(strProduceProductName, "Product");
+        _pProduct.openProduct(strProduceProductName);
+
 
         log.info("Verify the produce is + 20000 Units");
+        String _on_hand_produce = _pProduct.getOnHandAmount();
+        AssertJUnit.assertEquals(_on_hand_produce, "20,000.00");
 
     }
 }
