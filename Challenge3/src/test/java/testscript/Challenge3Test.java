@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pom.PageHome;
 import pom.PageInventory;
 import pom.PageManufacturingOrders;
+import org.testng.AssertJUnit;
 
 import java.text.SimpleDateFormat;
 
